@@ -28,17 +28,35 @@ const defaultPlugins = [
 console.log("=======当前环境状态=======", isDev)
 console.log("正在编译...")
 
+var ROOT_PATH = path.resolve(__dirname);
+var BULID_PATH = path.resolve(ROOT_PATH, '/dist/'); 
 const devServer = {
   port: 8010,
-  // host: '0.0.0.0',
+  host: '0.0.0.0',
   overlay: {
     errors: true, // 页面不刷新 仅更新组件数据 webpack会自动添加 HMR 插件。所以模块热更新最终还是 HMR 这个插件起的作用。
   },
+  progress: true, //显示打包的进度
+  // publicPath: "/",//这里也是2楼YoungYou指出来的问题，publicPath是存放编译后文件的位置，按照官方        
+  // //的描述，可以用完整的文件路径，或者文件夹名称，我加了```dist/```，所以请求的格    
+  // //式是'/dist/api/**',导致请求转发失败
+  contentBase: './dist',
   // historyFallback: {
 
   // },
   hot: true,
-  open: true
+  open: true,
+  //代理配置
+  proxy: {
+      '/post/**': {
+          target: 'http://cpdc.chinapost.com.cn:80/web',
+          secure: false, // 如果是https接口，需要配置这个参数
+          changeOrigin: true,// 如果接口跨域，需要进行这个参数配置
+//           pathRewrite: {   // 如果接口本身没有/api需要通过pathRewrite来重写了地址
+// 　　　　　    '^post': ''
+//           }
+      }
+  }
 }
 let config;
 

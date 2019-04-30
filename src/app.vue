@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div id="cover"></div>
-    <Header></Header>
+    <commonHeader></commonHeader>
     <Todo></Todo>
   </div>
 </template>
 
 <script>
-import Header from './todo/header.vue'
+import commonHeader from './todo/header.vue'
 import Todo from './todo/todo.vue'
 
 
@@ -18,7 +18,7 @@ export default {
     }
   },
   components: {
-    Header,
+    commonHeader,
     Todo,
   }
 }

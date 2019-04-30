@@ -29,6 +29,11 @@ let id = 0;
 export default {
   data(){
     return{
+      config: {
+        api: {
+          postcode: '/post/index.php?m=postsearch&c=index&a=ajax_addr'
+        }
+      },  
       todos: [],
       filter: 'all',
     }
@@ -49,11 +54,11 @@ export default {
     }
   },
   created(){
-    this.getPostcode();
   },
   methods: {
-    getPostcode(){
-    
+    getPostcode(address){
+      let self = this,
+          api = this.config.api;
       let params = {
         'm': 'postsearch',
         'c': 'index',
@@ -61,8 +66,9 @@ export default {
         'searchkey': '广东省深圳市罗湖区爱国路'
       }
       this.axios({
-           method: "get",
-             url: 'http://cpdc.chinapost.com.cn/web/index.php?m=postsearch&c=index&a=ajax_addr&searchkey=广东省深圳市罗湖区爱国路',
+            method: "get",
+            // url: api.postcode + '&searchkey=' + address,
+            url: '/post',
           }).then(function(res){
             console.log(res)
                   //控制台打印请求成功时返回的数据
@@ -73,6 +79,9 @@ export default {
     addTodo(e){
       let val = e.target.value;
       if(!val)return;
+
+      this.getPostcode(val);
+
       this.todos.unshift({
         id: id++,
         content: val.trim(),
