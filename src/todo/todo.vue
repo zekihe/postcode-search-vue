@@ -67,8 +67,8 @@ export default {
       }
       this.axios({
             method: "get",
-            // url: api.postcode + '&searchkey=' + address,
-            url: '/post',
+            url: api.postcode + '&searchkey=' + address,
+            // url: '/post',
           }).then(function(res){
             console.log(res)
                   //控制台打印请求成功时返回的数据
